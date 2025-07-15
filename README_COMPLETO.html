@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAPower SAAS - README e Guida Completa</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+         {
+            body { print-color-adjust: exact; }
+            .no-print { display: none !important; }
+        }
+        .code-block {
+            background-color: #1a1a1a;
+            color: #e6e6e6;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .highlight { background-color: #fef3c7; padding: 2px 4px; border-radius: 4px; }
+        .section-divider { border-top: 3px solid #3b82f6; margin: 3rem 0; padding-top: 2rem; }
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .nav-sticky {
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        .toc-link {
+            color: #6b7280;
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: block;
+            margin: 2px 0;
+        }
+        .toc-link:hover {
+            background-color: #f3f4f6;
+            color: #3b82f6;
+        }
+        .tech-badge {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 2px;
+            display: inline-block;
+        }
+        .warning-box {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .success-box {
+            background-color: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .error-box {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8 no-print">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">
+                        <i class="fas fa-rocket mr-3"></i>WAPower SAAS
+                    </h1>
+                    <p class="text-xl opacity-90">Sistema Professionale di Inoltro Email su WhatsApp</p>
+                </div>
+                <div class="text-right">
+                    <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                        <div class="text-sm opacity-80">Versione</div>
+                        <div class="text-2xl font-bold">v1.0.0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8 flex flex-wrap">
+        <!-- Sidebar Navigation -->
+        <div class="w-full lg:w-1/4 mb-8 lg:mb-0 no-print">
+            <div class="nav-sticky bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-bold mb-4 text-gray-800">
+                    <i class="fas fa-list mr-2"></i>Indice
+                </h3>
+                <nav class="space-y-1">
+                    <a href="#overview" class="toc-link"><i class="fas fa-eye mr-2"></i>Panoramica</a>
+                    <a href="#features" class="toc-link"><i class="fas fa-star mr-2"></i>Funzionalità</a>
+                    <a href="#architecture" class="toc-link"><i class="fas fa-sitemap mr-2"></i>Architettura</a>
+                    <a href="#requirements" class="toc-link"><i class="fas fa-cogs mr-2"></i>Requisiti</a>
+                    <a href="#quick-start" class="toc-link"><i class="fas fa-play mr-2"></i>Avvio Rapido</a>
+                    <a href="#installation" class="toc-link"><i class="fas fa-download mr-2"></i>Installazione</a>
+                    <a href="#configuration" class="toc-link"><i class="fas fa-wrench mr-2"></i>Configurazione</a>
+                    <a href="#deployment" class="toc-link"><i class="fas fa-cloud mr-2"></i>Deployment</a>
+                    <a href="#security" class="toc-link"><i class="fas fa-shield-alt mr-2"></i>Sicurezza</a>
+                    <a href="#integrations" class="toc-link"><i class="fas fa-plug mr-2"></i>Integrazioni</a>
+                    <a href="#api" class="toc-link"><i class="fas fa-code mr-2"></i>API</a>
+                    <a href="#dashboard" class="toc-link"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>
+                    <a href="#troubleshooting" class="toc-link"><i class="fas fa-bug mr-2"></i>Troubleshooting</a>
+                    <a href="#faq" class="toc-link"><i class="fas fa-question-circle mr-2"></i>FAQ</a>
+                    <a href="#support" class="toc-link"><i class="fas fa-life-ring mr-2"></i>Supporto</a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="w-full lg:w-3/4 lg:pl-8">
+            <!-- Panoramica del Progetto -->
+            <section id="overview" class="mb-12">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-eye mr-3 text-blue-600"></i>Panoramica del Progetto
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
+                    <p class="text-lg text-gray-700 mb-6">
+                        WAPower SAAS è un sistema professionale per l'inoltro automatico di email su WhatsApp, 
+                        progettato per aziende che necessitano di una soluzione robusta, sicura e scalabile 
+                        per la gestione delle comunicazioni.
+                    </p>
+
+                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <div class="feature-card">
+                            <h4 class="text-lg font-bold mb-2">
+                                <i class="fas fa-shield-alt mr-2"></i>Sicurezza Enterprise
+                            </h4>
+                            <p class="text-sm opacity-90">Password hashate con bcrypt, rate limiting, headers di sicurezza</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4 class="text-lg font-bold mb-2">
+                                <i class="fas fa-sync-alt mr-2"></i>Aggiornamenti Automatici
+                            </h4>
+                            <p class="text-sm opacity-90">Sistema di aggiornamento con backup automatico e rollback</p>
+                        </div>
+                        <div class="feature-card">
+                            <h4 class="text-lg font-bold mb-2">
+                                <i class="fas fa-plug mr-2"></i>Integrazioni Native
+                            </h4>
+                            <p class="text-sm opacity-90">N8N, WordPress, API REST, Webhook intelligenti</p>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4 class="font-bold mb-2"><i class="fas fa-lightbulb mr-2"></i>Caso d'Uso Ideale</h4>
+                        <p>Perfetto per aziende che ricevono email di supporto, ordini o notifiche e vogliono inoltrarle automaticamente su WhatsApp per una gestione più rapida ed efficiente.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Funzionalità Principali -->
+            <section id="features" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-star mr-3 text-blue-600"></i>Funzionalità Principali
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Gmail Integration -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600">
+                            <i class="fab fa-google mr-2"></i>Gmail Integration
+                        </h3>
+                        <ul class="space-y-2 text-gray-700">
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Polling automatico email non lette</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Estrazione automatica numero telefono</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Gestione allegati (filtro tipo/dimensione)</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Parsing multipart e HTML</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Marcatura automatica come lette</li>
+                        </ul>
+                    </div>
+
+                    <!-- WhatsApp Management -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-green-600">
+                            <i class="fab fa-whatsapp mr-2"></i>WhatsApp Management
+                        </h3>
+                        <ul class="space-y-2 text-gray-700">
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Sessione persistente con QR Code</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Riconnessione automatica</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Coda messaggi con retry</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Invio testi, immagini, documenti</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Gestione gruppi e contatti</li>
+                        </ul>
+                    </div>
+
+                    <!-- Dashboard Avanzata -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-purple-600">
+                            <i class="fas fa-tachometer-alt mr-2"></i>Dashboard Avanzata
+                        </h3>
+                        <ul class="space-y-2 text-gray-700">
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Monitoraggio real-time servizi</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Statistiche dettagliate con grafici</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Log completi con ricerca/filtri</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Gestione aggiornamenti sistema</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>PWA con notifiche push</li>
+                        </ul>
+                    </div>
+
+                    <!-- API & Integrazioni -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-orange-600">
+                            <i class="fas fa-code mr-2"></i>API & Integrazioni
+                        </h3>
+                        <ul class="space-y-2 text-gray-700">
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>API REST complete con auth</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Webhook intelligenti con retry</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>N8N custom nodes</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Plugin WordPress nativo</li>
+                            <li><i class="fas fa-check-circle mr-2 text-green-500"></i>Supporto Zapier, Make.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Architettura -->
+            <section id="architecture" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-sitemap mr-3 text-blue-600"></i>Architettura
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Stack Tecnologico</h3>
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <h4 class="font-bold mb-2">Backend</h4>
+                            <div class="flex flex-wrap">
+                                <span class="tech-badge">Node.js 18+</span>
+                                <span class="tech-badge">Express</span>
+                                <span class="tech-badge">Socket.IO</span>
+                                <span class="tech-badge">SQLite</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Frontend</h4>
+                            <div class="flex flex-wrap">
+                                <span class="tech-badge">Vanilla JS</span>
+                                <span class="tech-badge">Chart.js</span>
+                                <span class="tech-badge">PWA</span>
+                                <span class="tech-badge">Tailwind CSS</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Deploy</h4>
+                            <div class="flex flex-wrap">
+                                <span class="tech-badge">Docker</span>
+                                <span class="tech-badge">Nginx</span>
+                                <span class="tech-badge">SSL/TLS</span>
+                                <span class="tech-badge">Let's Encrypt</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Integrazioni</h4>
+                            <div class="flex flex-wrap">
+                                <span class="tech-badge">N8N</span>
+                                <span class="tech-badge">WordPress</span>
+                                <span class="tech-badge">WooCommerce</span>
+                                <span class="tech-badge">Gmail API</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Struttura Servizi</h3>
+                    <div class="bg-gray-100 rounded-lg p-4">
+                        <ul class="space-y-2">
+                            <li><strong>services/whatsapp.js</strong> - Client WhatsApp Web</li>
+                            <li><strong>services/gmail.js</strong> - Polling Gmail API</li>
+                            <li><strong>services/database.js</strong> - Gestione SQLite</li>
+                            <li><strong>services/update.js</strong> - Sistema aggiornamenti</li>
+                            <li><strong>middleware/auth.js</strong> - Autenticazione e sicurezza</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Requisiti di Sistema -->
+            <section id="requirements" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-cogs mr-3 text-blue-600"></i>Requisiti di Sistema
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Requisiti Minimi -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-orange-600">
+                            <i class="fas fa-server mr-2"></i>Requisiti Minimi
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <strong class="w-20">CPU:</strong>
+                                <span>2 core / 2.0 GHz</span>
+                            </li>
+                            <li class="flex items-center">
+                                <strong class="w-20">RAM:</strong>
+                                <span>2 GB</span>
+                            </li>
+                            <li class="flex items-center">
+                                <strong class="w-20">Storage:</strong>
+                                <span>10 GB SSD</span>
+                            </li>
+                            <li class="flex items-center">
+                                <strong class="w-20">OS:</strong>
+                                <span>Linux Ubuntu 18.04+</span>
+                            </li>
+                            <li class="flex items-center">
+                                <strong class="w-20">Node.js:</strong>
+                                <span>18.0+</span>
+                            </li>
+                            <li class="flex items-center">
+                                <strong class="w-20">Docker:</strong>
+                                <span>20.0+</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Requisiti Raccomandati -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-green-600">
+                            <i class="fas fa-star mr-2"></i>Requisiti Raccomandati
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <strong class="w-20">CPU:</strong>
+                                <span>4 core / 3.0 GHz</span>
+                            </li>
+                            <li class="flex items-center">
+                                <strong class="w-20">RAM:</strong>
+                                <span>4 GB</span>
+                            </li>
+                            <li class="flex items-center">
+                                <strong class="w-20">Storage:</strong>
+                                <span>50 GB SSD</span>
+                            </li>
+                            <li class="flex items-center">
+                                <strong class="w-20">OS:</strong>
+                                <span>Linux Ubuntu 20.04+</span>
+                            </li>
+                            <li class="flex items-center">
+                                <strong class="w-20">Network:</strong>
+                                <span>100 Mbps</span>
+                            </li>
+                            <li class="flex items-center">
+                                <strong class="w-20">SSL:</strong>
+                                <span>Certificato valido</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box mt-6">
+                    <h4 class="font-bold mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Importante</h4>
+                    <p>WhatsApp Web richiede una connessione internet stabile. Il telefono deve rimanere connesso per mantenere la sessione attiva.</p>
+                </div>
+            </section>
+
+            <!-- Avvio Rapido -->
+            <section id="quick-start" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-play mr-3 text-blue-600"></i>Avvio Rapido
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <!-- Step 1 -->
+                        <div class="text-center">
+                            <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <span class="text-2xl font-bold text-blue-600">1</span>
+                            </div>
+                            <h3 class="font-bold mb-2">Clone del Repository</h3>
+                            <div class="code-block text-left">
+git clone https://github.com/tuoaccount/wapower-saas.git
+cd wapower-saas
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="text-center">
+                            <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <span class="text-2xl font-bold text-green-600">2</span>
+                            </div>
+                            <h3 class="font-bold mb-2">Setup Automatico</h3>
+                            <div class="code-block text-left">
+# Installa dipendenze
+npm install
+
+# Avvia setup interattivo
+npm run setup
+                            </div>
+                            <p class="text-sm text-gray-600 mt-2">Il setup configurerà automaticamente dominio, Gmail API e credenziali.</p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="text-center">
+                            <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <span class="text-2xl font-bold text-purple-600">3</span>
+                            </div>
+                            <h3 class="font-bold mb-2">Deploy con Docker</h3>
+                            <div class="code-block text-left">
+# Build e avvio
+make deploy
+
+# Oppure manualmente
+docker-compose up -d
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="text-center">
+                            <div class="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <span class="text-2xl font-bold text-orange-600">4</span>
+                            </div>
+                            <h3 class="font-bold mb-2">Accesso Dashboard</h3>
+                            <div class="code-block text-left">
+# Apri nel browser
+https://tuodominio.it
+
+# Credenziali configurate durante setup
+Username: admin (o personalizzato)
+Password: [inserita durante setup]
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="success-box mt-8">
+                        <h4 class="font-bold mb-2"><i class="fas fa-check-circle mr-2"></i>Completato!</h4>
+                        <p>Se tutto è andato a buon fine, dovresti vedere la dashboard e poter scansionare il QR code per connettere WhatsApp.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Installazione -->
+            <section id="installation" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-download mr-3 text-blue-600"></i>Setup Completo
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Preparazione Ambiente</h3>
+                    <div class="code-block">
+# Verifica requisiti
+node --version  # deve essere >= 18.0
+docker --version
+npm --version
+
+# Clone repository
+git clone https://github.com/tuoaccount/wapower-saas.git
+cd wapower-saas
+
+# Installa dipendenze
+npm install
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Configurazione Gmail API</h3>
+                    <p class="text-gray-700 mb-4"><strong>Prerequisito:</strong> Devi avere un progetto Google Cloud Console con Gmail API abilitata.</p>
+                    
+                    <h4 class="font-bold mb-2">1. Crea Progetto Google Cloud</h4>
+                    <ul class="list-disc pl-6 mb-4 space-y-2">
+                        <li>Vai su <a href="https://console.cloud.google.com/" class="text-blue-600 underline">Google Cloud Console</a></li>
+                        <li>Crea nuovo progetto o seleziona esistente</li>
+                        <li>Abilita Gmail API nella sezione "APIs & Services"</li>
+                    </ul>
+
+                    <h4 class="font-bold mb-2">2. Configura OAuth 2.0</h4>
+                    <ul class="list-disc pl-6 mb-4 space-y-2">
+                        <li>Vai in "Credentials" → "Create Credentials" → "OAuth 2.0 Client ID"</li>
+                        <li>Tipo: Web application</li>
+                        <li>Authorized redirect URIs: <code class="bg-gray-200 px-2 py-1 rounded">https://developers.google.com/oauthplayground</code></li>
+                        <li>Salva Client ID e Client Secret</li>
+                    </ul>
+
+                    <h4 class="font-bold mb-2">3. Genera Refresh Token</h4>
+                    <ul class="list-disc pl-6 mb-4 space-y-2">
+                        <li>Vai su <a href="https://developers.google.com/oauthplayground" class="text-blue-600 underline">OAuth 2.0 Playground</a></li>
+                        <li>Click ingranaggio "Use your own OAuth credentials"</li>
+                        <li>Inserisci Client ID e Client Secret</li>
+                        <li>Scope: <code class="bg-gray-200 px-2 py-1 rounded">https://www.googleapis.com/auth/gmail.readonly</code></li>
+                        <li>Autorizza e ottieni Refresh Token</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Esecuzione Setup</h3>
+                    <div class="code-block">
+# Avvia setup interattivo
+npm run setup
+
+# Oppure usa Makefile
+make setup
+                    </div>
+                    <p class="text-gray-700 mt-4">Il setup ti guiderà attraverso la configurazione di dominio, Gmail API, credenziali dashboard e opzioni avanzate.</p>
+                </div>
+            </section>
+
+            <!-- Configurazione -->
+            <section id="configuration" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-wrench mr-3 text-blue-600"></i>Configurazione
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">File .env Principale</h3>
+                    <div class="code-block">
+# Server Configuration
+PORT=3000
+HOST=0.0.0.0
+NODE_ENV=production
+DOMAIN=tuodominio.it
+APP_NAME=WAPower
+APP_VERSION=1.0.0
+
+# Gmail API Configuration
+GMAIL_CLIENT_ID=your-client-id
+GMAIL_CLIENT_SECRET=your-client-secret
+GMAIL_REFRESH_TOKEN=your-refresh-token
+GMAIL_REDIRECT_URI=https://developers.google.com/oauthplayground
+
+# WhatsApp Configuration
+WHATSAPP_SESSION_PATH=./wapower_session
+WHATSAPP_CLIENT_ID=wapower-main
+
+# Database Configuration
+DB_PATH=./wapower_database.sqlite
+
+# Security Configuration
+DASHBOARD_USERNAME=admin
+DASHBOARD_PASSWORD_HASH=$2b$12$...
+SESSION_SECRET=your-session-secret
+ALLOWED_IPS=192.168.1.0/24,10.0.0.0/8
+
+# Application Configuration
+MAX_MESSAGE_LENGTH=4000
+POLLING_INTERVAL=30000
+LOG_LEVEL=info
+
+# Backup Configuration
+BACKUP_ENABLED=true
+BACKUP_INTERVAL=86400000
+BACKUP_RETENTION_DAYS=30
+
+# SSL Configuration
+SSL_ENABLED=true
+SSL_CERT_PATH=./ssl/fullchain.pem
+SSL_KEY_PATH=./ssl/privkey.pem
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-6 mb-4 text-blue-600">Descrizione Variabili</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-gray-50 border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-4 py-2 border-b font-bold text-left">Variabile</th>
+                                    <th class="px-4 py-2 border-b font-bold text-left">Descrizione</th>
+                                    <th class="px-4 py-2 border-b font-bold text-left">Obbligatorio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>DOMAIN</code></td>
+                                    <td class="px-4 py-2 border-b">Dominio dell'applicazione</td>
+                                    <td class="px-4 py-2 border-b text-red-600">Obbligatorio</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>GMAIL_CLIENT_ID</code></td>
+                                    <td class="px-4 py-2 border-b">ID client Google OAuth</td>
+                                    <td class="px-4 py-2 border-b text-red-600">Obbligatorio</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>DASHBOARD_PASSWORD_HASH</code></td>
+                                    <td class="px-4 py-2 border-b">Hash bcrypt della password</td>
+                                    <td class="px-4 py-2 border-b text-red-600">Obbligatorio</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>ALLOWED_IPS</code></td>
+                                    <td class="px-4 py-2 border-b">IP autorizzati (CIDR)</td>
+                                    <td class="px-4 py-2 border-b text-gray-600">Opzionale</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>LOG_LEVEL</code></td>
+                                    <td class="px-4 py-2 border-b">debug, info, warn, error</td>
+                                    <td class="px-4 py-2 border-b text-gray-600">Default: info</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deployment -->
+            <section id="deployment" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-cloud mr-3 text-blue-600"></i>Deployment Docker
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Comandi Makefile</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-gray-50 border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-4 py-2 border-b font-bold text-left">Comando</th>
+                                    <th class="px-4 py-2 border-b font-bold text-left">Descrizione</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>make deploy</code></td>
+                                    <td class="px-4 py-2 border-b">Deploy completo dell'applicazione</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>make start</code></td>
+                                    <td class="px-4 py-2 border-b">Avvia i servizi</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>make stop</code></td>
+                                    <td class="px-4 py-2 border-b">Ferma i servizi</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>make restart</code></td>
+                                    <td class="px-4 py-2 border-b">Riavvia i servizi</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>make logs</code></td>
+                                    <td class="px-4 py-2 border-b">Visualizza logs in tempo reale</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b"><code>make backup</code></td>
+                                    <td class="px-4 py-2 border-b">Esegui backup manuale</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Deployment Manuale</h3>
+                    <div class="code-block">
+# Build immagini
+docker-compose build
+
+# Avvio servizi
+docker-compose up -d
+
+# Verifica stato
+docker-compose ps
+
+# Visualizza logs
+docker-compose logs -f
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Struttura Container</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold mb-2 text-blue-600">wapower</h4>
+                            <ul class="space-y-1 text-sm">
+                                <li>• Applicazione Node.js principale</li>
+                                <li>• Porta: 3000</li>
+                                <li>• Volume: sessioni, database, logs, backup</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h4 class="font-bold mb-2 text-green-600">wapower-nginx</h4>
+                            <ul class="space-y-1 text-sm">
+                                <li>• Reverse proxy con SSL</li>
+                                <li>• Porte: 80, 443</li>
+                                <li>• Rate limiting e security headers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sicurezza -->
+            <section id="security" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-shield-alt mr-3 text-blue-600"></i>Sicurezza
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Funzionalità di Sicurezza</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold mb-2 text-green-600">Autenticazione</h4>
+                            <ul class="space-y-1 text-sm">
+                                <li>• Password hashate con bcrypt (12 rounds)</li>
+                                <li>• Sessioni sicure con SQLite store</li>
+                                <li>• Cookie httpOnly e secure</li>
+                                <li>• Session secret randomizzato</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2 text-orange-600">Rate Limiting</h4>
+                            <ul class="space-y-1 text-sm">
+                                <li>• Login: 5 tentativi/15 minuti</li>
+                                <li>• API: 100 richieste/15 minuti</li>
+                                <li>• Strict API: 10 richieste/minuto</li>
+                                <li>• IP-based tracking</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2 text-purple-600">Headers Sicurezza</h4>
+                            <ul class="space-y-1 text-sm">
+                                <li>• X-Frame-Options: DENY</li>
+                                <li>• X-Content-Type-Options: nosniff</li>
+                                <li>• X-XSS-Protection: 1; mode=block</li>
+                                <li>• Strict-Transport-Security</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2 text-red-600">Validazione Input</h4>
+                            <ul class="space-y-1 text-sm">
+                                <li>• Sanitizzazione automatica</li>
+                                <li>• Validazione express-validator</li>
+                                <li>• Lunghezza massima input</li>
+                                <li>• Filtro caratteri dannosi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Checklist Sicurezza</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <input type="checkbox" checked disabled class="mr-3">
+                            <span>Password dashboard hashata con bcrypt</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" checked disabled class="mr-3">
+                            <span>SSL/HTTPS configurato</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="mr-3">
+                            <span>Firewall server configurato</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" checked disabled class="mr-3">
+                            <span>Backup automatici attivati</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" checked disabled class="mr-3">
+                            <span>Logging audit attivato</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" checked disabled class="mr-3">
+                            <span>Aggiornamenti automatici configurati</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API -->
+            <section id="api" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-code mr-3 text-blue-600"></i>API REST
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Autenticazione API</h3>
+                    <div class="code-block">
+# Genera API Key dalla dashboard
+POST /api/v1/auth/generate-key
+Authorization: Bearer [session-token]
+
+# Usa API Key per richieste
+GET /api/v1/messages
+Authorization: Bearer [api-key]
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Endpoint Principali</h3>
+                    
+                    <h4 class="font-bold mb-2 text-green-600">Invio Messaggi</h4>
+                    <div class="code-block">
+# Messaggio singolo
+POST /api/v1/messages
+{
+  "phone": "+39123456789",
+  "message": "Ciao dal sistema WAPower!"
+}
+
+# Messaggio multiplo
+POST /api/v1/messages/bulk
+{
+  "messages": [
+    {"phone": "+39123456789", "message": "Messaggio 1"},
+    {"phone": "+39987654321", "message": "Messaggio 2"}
+  ]
+}
+                    </div>
+
+                    <h4 class="font-bold mb-2 mt-6 text-purple-600">Statistiche</h4>
+                    <div class="code-block">
+# Statistiche generali
+GET /api/v1/stats
+
+# Statistiche per periodo
+GET /api/v1/stats?range=7&type=daily
+
+# Statistiche per API Key
+GET /api/v1/stats/apikey
+                    </div>
+
+                    <h4 class="font-bold mb-2 mt-6 text-orange-600">Webhook</h4>
+                    <div class="code-block">
+# Registra webhook
+POST /api/v1/webhooks
+{
+  "url": "https://tuodominio.it/webhook",
+  "events": ["message_sent", "message_failed"],
+  "secret": "your-secret-key"
+}
+
+# Lista webhook
+GET /api/v1/webhooks
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Rate Limiting</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-gray-50 border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-4 py-2 border-b font-bold text-left">Tier</th>
+                                    <th class="px-4 py-2 border-b font-bold text-left">Richieste/ora</th>
+                                    <th class="px-4 py-2 border-b font-bold text-left">Messaggi/giorno</th>
+                                    <th class="px-4 py-2 border-b font-bold text-left">Webhook</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-2 border-b font-bold">Free</td>
+                                    <td class="px-4 py-2 border-b">100</td>
+                                    <td class="px-4 py-2 border-b">10</td>
+                                    <td class="px-4 py-2 border-b">1</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b font-bold">Basic</td>
+                                    <td class="px-4 py-2 border-b">1000</td>
+                                    <td class="px-4 py-2 border-b">100</td>
+                                    <td class="px-4 py-2 border-b">5</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b font-bold">Pro</td>
+                                    <td class="px-4 py-2 border-b">10000</td>
+                                    <td class="px-4 py-2 border-b">1000</td>
+                                    <td class="px-4 py-2 border-b">20</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border-b font-bold">Enterprise</td>
+                                    <td class="px-4 py-2 border-b">Illimitato</td>
+                                    <td class="px-4 py-2 border-b">Illimitato</td>
+                                    <td class="px-4 py-2 border-b">Illimitato</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Integrazioni -->
+            <section id="integrations" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-plug mr-3 text-blue-600"></i>Integrazioni
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- N8N Integration -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600">
+                            <i class="fas fa-sitemap mr-2"></i>N8N Integration
+                        </h3>
+                        
+                        <h4 class="font-bold mb-2">Installazione Node Custom</h4>
+                        <div class="code-block text-sm">
+# Installa node WAPower per N8N
+npm install n8n-nodes-wapower
+
+# Configura N8N
+export N8N_CUSTOM_EXTENSIONS=n8n-nodes-wapower
+n8n start
+                        </div>
+
+                        <h4 class="font-bold mb-2 mt-4">Nodi Disponibili</h4>
+                        <ul class="space-y-1 text-sm">
+                            <li>• <strong>WAPower Send Message:</strong> Invio messaggi singoli</li>
+                            <li>• <strong>WAPower Bulk Send:</strong> Invio messaggi multipli</li>
+                            <li>• <strong>WAPower Trigger:</strong> Ricezione eventi webhook</li>
+                            <li>• <strong>WAPower Analytics:</strong> Statistiche e report</li>
+                        </ul>
+                    </div>
+
+                    <!-- WordPress Integration -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-orange-600">
+                            <i class="fab fa-wordpress mr-2"></i>WordPress Integration
+                        </h3>
+                        
+                        <h4 class="font-bold mb-2">Installazione Plugin</h4>
+                        <div class="code-block text-sm">
+# Download dalla dashboard WAPower
+# Oppure da repository WordPress
+wp plugin install wapower-integration-pro
+wp plugin activate wapower-integration-pro
+                        </div>
+
+                        <h4 class="font-bold mb-2 mt-4">Shortcode Disponibili</h4>
+                        <ul class="space-y-1 text-sm">
+                            <li>• <code>[wapower_form]</code> - Form contatto</li>
+                            <li>• <code>[wapower_button]</code> - Pulsante WhatsApp</li>
+                            <li>• <code>[wapower_floating]</code> - Pulsante floating</li>
+                            <li>• <code>[wapower_stats]</code> - Statistiche</li>
+                        </ul>
+                    </div>
+
+                    <!-- Altre Integrazioni -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-green-600">
+                            <i class="fas fa-link mr-2"></i>Altre Integrazioni
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <i class="fas fa-bolt mr-3 text-yellow-500"></i>
+                                <div>
+                                    <strong>Zapier</strong>
+                                    <p class="text-sm text-gray-600">Webhook-based integration per automazioni</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-cogs mr-3 text-blue-500"></i>
+                                <div>
+                                    <strong>Make.com</strong>
+                                    <p class="text-sm text-gray-600">HTTP requests per trigger e azioni</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fab fa-microsoft mr-3 text-blue-700"></i>
+                                <div>
+                                    <strong>Power Automate</strong>
+                                    <p class="text-sm text-gray-600">Connector REST API per Microsoft</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-code mr-3 text-purple-500"></i>
+                                <div>
+                                    <strong>Custom API</strong>
+                                    <p class="text-sm text-gray-600">REST API complete per integrazioni custom</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-purple-600">
+                            <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <strong>Accesso Dashboard</strong>
+                                <div class="code-block text-sm mt-2">
+# URL dashboard
+https://tuodominio.it
+
+# Credenziali (configurate durante setup)
+Username: admin
+Password: [password impostata durante setup]
+                                </div>
+                            </div>
+                            <div>
+                                <strong>Funzionalità Avanzate</strong>
+                                <ul class="space-y-1 text-sm">
+                                    <li>• <strong>PWA:</strong> Installabile come app mobile</li>
+                                    <li>• <strong>Socket.IO:</strong> Aggiornamenti real-time</li>
+                                    <li>• <strong>Notifiche:</strong> Toast per eventi importanti</li>
+                                    <li>• <strong>Dark Mode:</strong> Tema scuro automatico</li>
+                                    <li>• <strong>Responsive:</strong> Ottimizzato per mobile</li>
+                                    <li>• <strong>Offline:</strong> Service worker per cache</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard -->
+            <section id="dashboard" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-tachometer-alt mr-3 text-blue-600"></i>Dashboard
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Sezioni Dashboard</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold mb-2 text-green-600">Status Cards</h4>
+                            <ul class="space-y-1 text-sm">
+                                <li>• WhatsApp: stato connessione, QR code</li>
+                                <li>• Gmail: ultimo controllo, intervallo</li>
+                                <li>• Database: dimensione, backup</li>
+                                <li>• Messaggi: statistiche real-time</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2 text-purple-600">Test Messaggio</h4>
+                            <ul class="space-y-1 text-sm">
+                                <li>• Invio test manuale</li>
+                                <li>• Anteprima formattazione</li>
+                                <li>• Preset messaggi</li>
+                                <li>• Validazione numero</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2 text-orange-600">Log Attività</h4>
+                            <ul class="space-y-1 text-sm">
+                                <li>• Cronologia messaggi</li>
+                                <li>• Filtri avanzati</li>
+                                <li>• Ricerca full-text</li>
+                                <li>• Export CSV/JSON</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2 text-red-600">Aggiornamenti</h4>
+                            <ul class="space-y-1 text-sm">
+                                <li>• Controllo automatico</li>
+                                <li>• Backup pre-aggiornamento</li>
+                                <li>• Apply selettivo</li>
+                                <li>• Rollback automatico</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-bug mr-3 text-blue-600"></i>Troubleshooting
+                </h2>
+
+                <div class="space-y-6">
+                    <!-- WhatsApp Issues -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-red-600">
+                            <i class="fab fa-whatsapp mr-2"></i>WhatsApp non si connette
+                        </h3>
+                        <div class="mb-4">
+                            <strong>Sintomi:</strong> QR Code non appare o WhatsApp disconnesso
+                        </div>
+                        <div>
+                            <strong>Soluzioni:</strong>
+                            <ul class="list-disc pl-6 mt-2 space-y-1">
+                                <li>Verificare che Puppeteer sia installato correttamente</li>
+                                <li>Controllare che Chrome/Chromium sia disponibile</li>
+                                <li>Cancellare la directory wapower_session e riavviare</li>
+                                <li>Verificare firewall e porte aperte</li>
+                            </ul>
+                        </div>
+                        <div class="code-block mt-4">
+# Debug WhatsApp
+docker-compose logs wapower | grep -i whatsapp
+
+# Reset sessione
+rm -rf wapower_session/*
+docker-compose restart wapower
+
+# Test connessione
+curl -X POST http://localhost:3000/api/whatsapp/reconnect
+                        </div>
+                    </div>
+
+                    <!-- Gmail Issues -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-blue-600">
+                            <i class="fab fa-google mr-2"></i>Gmail API non funziona
+                        </h3>
+                        <div class="mb-4">
+                            <strong>Sintomi:</strong> Errori di autenticazione Gmail
+                        </div>
+                        <div>
+                            <strong>Soluzioni:</strong>
+                            <ul class="list-disc pl-6 mt-2 space-y-1">
+                                <li>Verificare credenziali Gmail API</li>
+                                <li>Controllare scadenza refresh token</li>
+                                <li>Rigenerare credenziali OAuth</li>
+                                <li>Verificare permessi API Gmail</li>
+                            </ul>
+                        </div>
+                        <div class="code-block mt-4">
+# Test Gmail API
+curl -X POST http://localhost:3000/api/gmail/test
+
+# Verifica credenziali
+echo $GMAIL_CLIENT_ID
+echo $GMAIL_CLIENT_SECRET
+
+# Rigenera refresh token
+# https://developers.google.com/oauthplayground
+                        </div>
+                    </div>
+
+                    <!-- Performance Issues -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-orange-600">
+                            <i class="fas fa-tachometer-alt mr-2"></i>Problemi di performance
+                        </h3>
+                        <div class="mb-4">
+                            <strong>Sintomi:</strong> Lentezza o timeout
+                        </div>
+                        <div>
+                            <strong>Soluzioni:</strong>
+                            <ul class="list-disc pl-6 mt-2 space-y-1">
+                                <li>Controllare uso memoria e CPU</li>
+                                <li>Verificare dimensione database</li>
+                                <li>Pulire logs e backup vecchi</li>
+                                <li>Aumentare risorse Docker</li>
+                            </ul>
+                        </div>
+                        <div class="code-block mt-4">
+# Monitoraggio risorse
+docker stats
+
+# Controllo database
+du -h wapower_database.sqlite
+
+# Pulizia logs
+truncate -s 0 logs/*.log
+
+# Backup e pulizia
+make backup && make clean
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8 mt-6">
+                    <h3 class="text-xl font-bold mb-4 text-blue-600">Comandi Utili</h3>
+                    <div class="code-block">
+# Stato completo sistema
+make health
+
+# Logs in tempo reale
+make logs
+
+# Backup di emergenza
+make backup
+
+# Riavvio completo
+make restart
+
+# Controllo configurazione
+make info
+
+# Test API
+curl -H "Authorization: Bearer your_api_key" http://localhost:3000/api/v1/stats
+
+# Reset completo
+make stop && make clean && make start
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ -->
+            <section id="faq" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-question-circle mr-3 text-blue-600"></i>FAQ
+                </h2>
+
+                <div class="space-y-4">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="font-bold mb-2 text-blue-600">Posso usare WAPower con più account WhatsApp?</h3>
+                        <p class="text-gray-700">No, ogni istanza WAPower supporta un solo account WhatsApp. Per più account, installa istanze separate.</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="font-bold mb-2 text-blue-600">Che succede se il telefono si disconnette?</h3>
+                        <p class="text-gray-700">WAPower rileva automaticamente la disconnessione e tenta di riconnettersi. Potresti dover scansionare nuovamente il QR code.</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="font-bold mb-2 text-blue-600">Posso personalizzare il formato dei messaggi?</h3>
+                        <p class="text-gray-700">Sì, puoi modificare il template dei messaggi nel file <code>services/gmail.js</code> o tramite API.</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="font-bold mb-2 text-blue-600">Come monitoro le performance?</h3>
+                        <p class="text-gray-700">Usa la dashboard per statistiche real-time, oppure integra con sistemi di monitoring esterni tramite API.</p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="font-bold mb-2 text-blue-600">È possibile fare backup incrementali?</h3>
+                        <p class="text-gray-700">Attualmente sono supportati solo backup completi. I backup incrementali sono in roadmap.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Supporto -->
+            <section id="support" class="section-divider">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-life-ring mr-3 text-blue-600"></i>Supporto
+                </h2>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 text-blue-600">Per supporto tecnico:</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center">
+                                    <i class="fas fa-envelope mr-3 text-gray-500"></i>
+                                    <a href="mailto:support@wapower.com" class="text-blue-600 hover:underline">support@wapower.com</a>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fab fa-telegram mr-3 text-gray-500"></i>
+                                    <a href="https://t.me/wapower_support" class="text-blue-600 hover:underline">@wapower_support</a>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-book mr-3 text-gray-500"></i>
+                                    <a href="https://docs.wapower.com" class="text-blue-600 hover:underline">docs.wapower.com</a>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fab fa-github mr-3 text-gray-500"></i>
+                                    <a href="https://github.com/wapower/wapower-saas/issues" class="text-blue-600 hover:underline">GitHub Issues</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 text-green-600">Risorse utili:</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center">
+                                    <i class="fas fa-video mr-3 text-gray-500"></i>
+                                    <span>Video tutorial su YouTube</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-users mr-3 text-gray-500"></i>
+                                    <span>Community Discord</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-graduation-cap mr-3 text-gray-500"></i>
+                                    <span>Corsi di formazione online</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-headset mr-3 text-gray-500"></i>
+                                    <span>Supporto prioritario per Enterprise</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8 mt-12 no-print">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-4">
+                <h3 class="text-2xl font-bold mb-2">
+                    <i class="fas fa-rocket mr-2"></i>WAPower SAAS
+                </h3>
+                <p class="opacity-90">Sistema Professionale di Inoltro Email su WhatsApp</p>
+            </div>
+            <div class="border-t border-white border-opacity-20 pt-4">
+                <p class="text-sm opacity-75">
+                    Versione 1.0.0 - Developed by Alby
+                </p>
+                <p class="text-sm opacity-75 mt-2">
+                    Per supporto e documentazione aggiuntiva, consulta la dashboard o contatta il team di sviluppo.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling per i link di navigazione
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight del link attivo nella navigazione
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.toc-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('bg-blue-100', 'text-blue-600');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('bg-blue-100', 'text-blue-600');
+                }
+            });
+        });
+
+        // Copy code blocks on click
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', () => {
+                navigator.clipboard.writeText(block.textContent).then(() => {
+                    const originalBg = block.style.backgroundColor;
+                    block.style.backgroundColor = '#10b981';
+                    setTimeout(() => {
+                        block.style.backgroundColor = originalBg;
+                    }, 200);
+                });
+            });
+            block.style.cursor = 'pointer';
+            block.title = 'Click per copiare';
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDlKhdonxMrFzqIKylXChCOPLndmFGRDacr2a2vitm97l%2BghkHib5SHBXZzi3UGJZPKnyfqcVGVeR8ucZJsA0vqfZJmg2c9UVwcnAPX0cUZOsOUoIqyGe2uYUs%2FliBMqD7vbMFHfdXvjGJf7UtYuCmCxhx%2FI8P2FLb1TH53OoY9DTqu57sOgCE8B0RyRDkzEWFK0H0SxsyFS598jRKLKoYqbNHUic7iGuJiwM8hRQQOQ3gp2v3EbgwVESVsvq1ehqKuRCcsz%2FKGNWs14XuMZvzKmjBbe8jQmt%2BcyCd5VTnc3qehyoFTKhzF7GpBy0UTPAcog09Jye8aS9fxvDi703C7XERp1PqEmsDgbQ%2FZ3K84Ku%2BseQ0gluezhanT8lk7%2BD8iLKRSndv7AKFGuQO8p0MAofuyd1hofQgNKn8fcLCQgpEuH4cyKDW34ZtTYmEBnEtcezmdMy2D8k2NGCNdUaN0Jxk7SCdATAJE7LxTOH39xJrb1NRKe0tqPJDiJ1l0dLrw%3D%3D";
+        window.__genspark_locale = "it-IT";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDlKhdonxMrFzqIKylXChCOPLndmFGRDacr2a2vitm97l+ghkHib5SHBXZzi3UGJZPKnyfqcVGVeR8ucZJsA0vqfZJmg2c9UVwcnAPX0cUZOsOUoIqyGe2uYUs/liBMqD7vbMFHfdXvjGJf7UtYuCmCxhx/I8P2FLb1TH53OoY9DTqu57sOgCE8B0RyRDkzEWFK0H0SxsyFS598jRKLKoYqbNHUic7iGuJiwM8hRQQOQ3gp2v3EbgwVESVsvq1ehqKuRCcsz/KGNWs14XuMZvzKmjBbe8jQmt+cyCd5VTnc3qehyoFTKhzF7GpBy0UTPAcog09Jye8aS9fxvDi703C7XERp1PqEmsDgbQ/Z3K84Ku+seQ0gluezhanT8lk7+D8iLKRSndv7AKFGuQO8p0MAofuyd1hofQgNKn8fcLCQgpEuH4cyKDW34ZtTYmEBnEtcezmdMy2D8k2NGCNdUaN0Jxk7SCdATAJE7LxTOH39xJrb1NRKe0tqPJDiJ1l0dLrw==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

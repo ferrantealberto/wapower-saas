@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAPower N8N Trigger - Webhook Trigger Node</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .code-block {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .highlight { background-color: #fef3c7; padding: 2px 4px; border-radius: 4px; color: #92400e; }
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-lg mb-8">
+            <div class="section-header">
+                <h1 class="text-2xl font-bold">
+                    <i class="fas fa-webhook"></i> WAPower N8N Trigger Node
+                </h1>
+                <p class="mt-2 opacity-90">Webhook trigger node per eventi WAPower con verifica HMAC e filtro eventi</p>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="text-center">
+                        <i class="fas fa-bolt text-3xl text-blue-500 mb-2"></i>
+                        <h3 class="font-semibold">Eventi Real-time</h3>
+                        <p class="text-sm text-gray-600">Trigger automatico su eventi</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-shield-alt text-3xl text-green-500 mb-2"></i>
+                        <h3 class="font-semibold">Sicurezza HMAC</h3>
+                        <p class="text-sm text-gray-600">Verifica firma crittografica</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-filter text-3xl text-purple-500 mb-2"></i>
+                        <h3 class="font-semibold">Filtro Eventi</h3>
+                        <p class="text-sm text-gray-600">Configura eventi da ascoltare</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Implementation -->
+        <div class="bg-white rounded-lg shadow-lg mb-8">
+            <div class="section-header">
+                <h2 class="text-xl font-bold">
+                    <i class="fas fa-code"></i> WAPowerTrigger.node.js
+                </h2>
+            </div>
+            <div class="p-6">
+                <div class="code-block">
+import {
+  IHookFunctions,
+  IWebhookFunctions,
+  IDataObject,
+  INodeType,
+  INodeTypeDescription,
+  IWebhookResponseData,
+} from 'n8n-workflow';
+import { createHmac } from 'crypto';
+
+export class WAPowerTrigger implements INodeType {
+  description: INodeTypeDescription = {
+    displayName: 'WAPower Trigger',
+    name: 'waPowerTrigger',
+    icon: 'file:wapower.svg',
+    group: ['trigger'],
+    version: 1,
+    description: 'Riceve eventi da WAPower tramite webhook',
+    defaults: {
+      name: 'WAPower Trigger',
+    },
+    inputs: [],
+    outputs: ['main'],
+    credentials: [
+      {
+        name: 'waPowerApi',
+        required: true,
+      },
+    ],
+    webhooks: [
+      {
+        name: 'default',
+        httpMethod: 'POST',
+        responseMode: 'onReceived',
+        path: 'webhook',
+      },
+    ],
+    properties: [
+      {
+        displayName: 'Events',
+        name: 'events',
+        type: 'multiOptions',
+        options: [
+          {
+            name: 'Message Sent',
+            value: 'message_sent',
+            description: 'Messaggio inviato con successo',
+          },
+          {
+            name: 'Message Failed',
+            value: 'message_failed',
+            description: 'Invio messaggio fallito',
+          },
+          {
+            name: 'WhatsApp Ready',
+            value: 'whatsapp_ready',
+            description: 'WhatsApp connesso e pronto',
+          },
+          {
+            name: 'WhatsApp Disconnected',
+            value: 'whatsapp_disconnected',
+            description: 'WhatsApp disconnesso',
+          },
+          {
+            name: 'Email Processed',
+            value: 'email_processed',
+            description: 'Email processata dal gateway',
+          },
+          {
+            name: 'Update Completed',
+            value: 'update_completed',
+            description: 'Aggiornamento sistema completato',
+          },
+        ],
+        default: ['message_sent', 'message_failed'],
+        description: 'Eventi per cui attivare il trigger',
+      },
+      {
+        displayName: 'Verify Signature',
+        name: 'verifySignature',
+        type: 'boolean',
+        default: true,
+        description: 'Verifica la firma HMAC del webhook',
+      },
+    ],
+  };
+
+  webhookMethods = {
+    default: {
+      async checkExists(this: IHookFunctions): Promise&lt;boolean&gt; {
+        const webhookData = this.getWorkflowStaticData('node');
+        if (webhookData.webhookId === undefined) {
+          return false;
+        }
+
+        const credentials = await this.getCredentials('waPowerApi');
+        const apiUrl = credentials.apiUrl as string;
+        const apiKey = credentials.apiKey as string;
+
+        const options = {
+          method: 'GET',
+          url: `${apiUrl}/api/v1/webhooks/${webhookData.webhookId}`,
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+          },
+        };
+
+        try {
+          const response = await this.helpers.request!(options);
+          return response.success === true;
+        } catch (error) {
+          return false;
+        }
+      },
+      async create(this: IHookFunctions): Promise&lt;boolean&gt; {
+        const webhookUrl = this.getNodeWebhookUrl('default');
+        const events = this.getNodeParameter('events') as string[];
+
+        const credentials = await this.getCredentials('waPowerApi');
+        const apiUrl = credentials.apiUrl as string;
+        const apiKey = credentials.apiKey as string;
+
+        const body = {
+          url: webhookUrl,
+          events,
+        };
+
+        const options = {
+          method: 'POST',
+          url: `${apiUrl}/api/v1/webhooks`,
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        };
+
+        const response = await this.helpers.request!(options);
+        const webhookData = this.getWorkflowStaticData('node');
+        webhookData.webhookId = response.data.id;
+
+        return true;
+      },
+      async delete(this: IHookFunctions): Promise&lt;boolean&gt; {
+        const webhookData = this.getWorkflowStaticData('node');
+        if (webhookData.webhookId === undefined) {
+          return true;
+        }
+
+        const credentials = await this.getCredentials('waPowerApi');
+        const apiUrl = credentials.apiUrl as string;
+        const apiKey = credentials.apiKey as string;
+
+        const options = {
+          method: 'DELETE',
+          url: `${apiUrl}/api/v1/webhooks/${webhookData.webhookId}`,
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+          },
+        };
+
+        try {
+          await this.helpers.request!(options);
+        } catch (error) {
+          return false;
+        }
+
+        delete webhookData.webhookId;
+        return true;
+      },
+    },
+  };
+
+  async webhook(this: IWebhookFunctions): Promise&lt;IWebhookResponseData&gt; {
+    const body = this.getBodyData();
+    const headers = this.getHeaderData();
+    const events = this.getNodeParameter('events') as string[];
+    const verifySignature = this.getNodeParameter('verifySignature') as boolean;
+
+    // Verifica firma HMAC se abilitata
+    if (verifySignature) {
+      const credentials = await this.getCredentials('waPowerApi');
+      const webhookSecret = credentials.webhookSecret as string;
+
+      if (webhookSecret) {
+        const signature = headers['x-wapower-signature'] as string;
+        const payload = JSON.stringify(body);
+        const expectedSignature = createHmac('sha256', webhookSecret).update(payload).digest('hex');
+
+        if (signature !== `sha256=${expectedSignature}`) {
+          return {
+            workflowData: [
+              [
+                {
+                  json: {
+                    error: 'Invalid signature',
+                  },
+                },
+              ],
+            ],
+          };
+        }
+      }
+    }
+
+    const eventType = (body as IDataObject).event as string;
+
+    // Filtra eventi non richiesti
+    if (!events.includes(eventType)) {
+      return {
+        workflowData: [
+          [
+            {
+              json: {
+                message: `Event ${eventType} not in configured events`,
+              },
+            },
+          ],
+        ],
+      };
+    }
+
+    return {
+      workflowData: [
+        [
+          {
+            json: body,
+          },
+        ],
+      ],
+    };
+  }
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Guide -->
+        <div class="bg-white rounded-lg shadow-lg mb-8">
+            <div class="section-header">
+                <h2 class="text-xl font-bold">
+                    <i class="fas fa-cog"></i> Configurazione e Utilizzo
+                </h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">
+                            <i class="fas fa-play-circle text-green-500"></i> Setup Iniziale
+                        </h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm">
+                            <li>Installa il package N8N: <span class="highlight">npm install n8n-nodes-wapower</span></li>
+                            <li>Configura credenziali WAPower API</li>
+                            <li>Aggiungi il nodo "WAPower Trigger" al workflow</li>
+                            <li>Seleziona eventi da monitorare</li>
+                            <li>Attiva verifica HMAC per sicurezza</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">
+                            <i class="fas fa-list text-blue-500"></i> Eventi Disponibili
+                        </h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><span class="highlight">message_sent</span> - Messaggio inviato</li>
+                            <li><span class="highlight">message_failed</span> - Invio fallito</li>
+                            <li><span class="highlight">whatsapp_ready</span> - WhatsApp connesso</li>
+                            <li><span class="highlight">whatsapp_disconnected</span> - WhatsApp offline</li>
+                            <li><span class="highlight">email_processed</span> - Email elaborata</li>
+                            <li><span class="highlight">update_completed</span> - Aggiornamento completato</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Features -->
+        <div class="bg-white rounded-lg shadow-lg mb-8">
+            <div class="section-header">
+                <h2 class="text-xl font-bold">
+                    <i class="fas fa-shield-alt"></i> Sicurezza e Verifica HMAC
+                </h2>
+            </div>
+            <div class="p-6">
+                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-info-circle text-blue-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-blue-700">
+                                La verifica HMAC garantisce che i webhook provengano effettivamente da WAPower e non siano stati manomessi.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+// Verifica firma HMAC nel trigger
+const signature = headers['x-wapower-signature'] as string;
+const payload = JSON.stringify(body);
+const expectedSignature = createHmac('sha256', webhookSecret)
+  .update(payload)
+  .digest('hex');
+
+if (signature !== `sha256=${expectedSignature}`) {
+  // Webhook non autentico - rifiuta
+  return { workflowData: [[{ json: { error: 'Invalid signature' }}]] };
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Example Payload -->
+        <div class="bg-white rounded-lg shadow-lg">
+            <div class="section-header">
+                <h2 class="text-xl font-bold">
+                    <i class="fas fa-code"></i> Esempio Payload Eventi
+                </h2>
+            </div>
+            <div class="p-6">
+                <h3 class="text-lg font-semibold mb-3">Evento: message_sent</h3>
+                <div class="code-block">
+{
+  "event": "message_sent",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "data": {
+    "id": "msg_123456",
+    "phone": "+39123456789",
+    "message": "Messaggio di test inviato con successo",
+    "status": "sent",
+    "type": "manual",
+    "source": "api"
+  },
+  "user_id": "user_789"
+}
+                </div>
+
+                <h3 class="text-lg font-semibold mb-3 mt-6">Evento: whatsapp_ready</h3>
+                <div class="code-block">
+{
+  "event": "whatsapp_ready",
+  "timestamp": "2024-01-15T10:25:00Z",
+  "data": {
+    "status": "connected",
+    "userInfo": {
+      "pushname": "WAPower Bot",
+      "number": "39123456789",
+      "platform": "android"
+    },
+    "sessionRestored": true
+  },
+  "user_id": "user_789"
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 text-gray-500">
+            <p><i class="fas fa-code"></i> WAPower N8N Trigger Node - Versione 1.0.0</p>
+            <p class="text-sm">Integrazione N8N per automazioni avanzate con WAPower SAAS</p>
+        </div>
+    </div>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDm5b2BIbIAg6uptdGvZZAK7cfRuWBLZYSGWGt43V7qXkaGoizJ%2FGRwEqjDksT2vhHTEtCxBeeIrv4tNzKfTT2g8ZFB3CXRKlD41P%2B9D16dihiq%2Bco15ZbJEZU5bxYX7g7ZT5mJkNRm3lrmj5IRuCfUUuW2c3GBhgU9xEnN%2FvhrT7KmRUgx02ALEm52reXcmAIyhMDox3r46H9iQBu%2FUJeJG6Nh9gCeJNlyM6mF5oH3i3iy42ZPuvlTTjOczO4oj6%2BW25medq9K%2Bn2ElMHdODsHFnhSk9ccEm6OvJ1YYmRyeS1n8gy6A2r5%2B9ZGY88DQpkLyjvXezyY27VLkgh0Rg41QD6XpMm2khBNnO3zOw7IbdzEK3G1h38t1n6MQqBrKY4kEycEk%2F54mYHOmTx5KBmVT3ulvYTm6QhLFDw6UAWmeGKT1rqeryyOGHxWuAINUSjTSS%2BcVcQSaZ2r4kfnNXzNRKJUUiAx4xMKrohBJLtrQ6MffjHyYij02FruE7t23T0A%3D%3D";
+        window.__genspark_locale = "it-IT";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDm5b2BIbIAg6uptdGvZZAK7cfRuWBLZYSGWGt43V7qXkaGoizJ/GRwEqjDksT2vhHTEtCxBeeIrv4tNzKfTT2g8ZFB3CXRKlD41P+9D16dihiq+co15ZbJEZU5bxYX7g7ZT5mJkNRm3lrmj5IRuCfUUuW2c3GBhgU9xEnN/vhrT7KmRUgx02ALEm52reXcmAIyhMDox3r46H9iQBu/UJeJG6Nh9gCeJNlyM6mF5oH3i3iy42ZPuvlTTjOczO4oj6+W25medq9K+n2ElMHdODsHFnhSk9ccEm6OvJ1YYmRyeS1n8gy6A2r5+9ZGY88DQpkLyjvXezyY27VLkgh0Rg41QD6XpMm2khBNnO3zOw7IbdzEK3G1h38t1n6MQqBrKY4kEycEk/54mYHOmTx5KBmVT3ulvYTm6QhLFDw6UAWmeGKT1rqeryyOGHxWuAINUSjTSS+cVcQSaZ2r4kfnNXzNRKJUUiAx4xMKrohBJLtrQ6MffjHyYij02FruE7t23T0A==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

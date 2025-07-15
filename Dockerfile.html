@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAPower Dockerfile - Container Configuration</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .code-block {
+            background-color: #1f2937;
+            color: #f3f4f6;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+        .file-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="file-header">
+                <div class="flex items-center">
+                    <i class="fab fa-docker mr-3 text-2xl"></i>
+                    <div>
+                        <h1 class="text-xl font-bold">Dockerfile</h1>
+                        <p class="text-blue-100">Docker configuration file for WAPower SAAS containerization</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-2">
+                        <i class="fas fa-info-circle mr-2 text-blue-500"></i>
+                        Descrizione
+                    </h2>
+                    <p class="text-gray-600">
+                        Configurazione Docker per la containerizzazione dell'applicazione WAPower SAAS. 
+                        Include tutte le dipendenze necessarie per Puppeteer, WhatsApp Web e l'ambiente di produzione.
+                    </p>
+                </div>
+
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-2">
+                        <i class="fas fa-file-code mr-2 text-green-500"></i>
+                        Contenuto Dockerfile
+                    </h2>
+                    <div class="code-block">FROM node:18-alpine
+
+# Installa dipendenze per Puppeteer e WhatsApp
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    curl \
+    bash \
+    git
+
+# Configurazione Puppeteer
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+ENV NODE_ENV=production
+
+# Crea utente non-root per sicurezza
+RUN addgroup -g 1001 -S wapower && \
+    adduser -S wapower -u 1001
+
+# Directory di lavoro
+WORKDIR /app
+
+# Copia e installa dipendenze
+COPY package*.json ./
+RUN npm ci --only=production && \
+    npm cache clean --force
+
+# Copia tutto il codice
+COPY --chown=wapower:wapower . .
+
+# Crea directory persistenti
+RUN mkdir -p wapower_session logs backups ssl config && \
+    chown -R wapower:wapower /app
+
+# Cambia utente
+USER wapower
+
+# Espone porta
+EXPOSE 3000
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:3000/api/status || exit 1
+
+# Comando di avvio
+CMD ["npm", "start"]</div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-blue-800 mb-2">
+                            <i class="fas fa-cogs mr-2"></i>
+                            Caratteristiche
+                        </h3>
+                        <ul class="text-sm text-blue-700 space-y-1">
+                            <li>• Base image: Node.js 18 Alpine</li>
+                            <li>• Chromium integrato per WhatsApp Web</li>
+                            <li>• Utente non-root per sicurezza</li>
+                            <li>• Health check automatico</li>
+                            <li>• Ottimizzato per produzione</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-green-800 mb-2">
+                            <i class="fas fa-shield-alt mr-2"></i>
+                            Sicurezza
+                        </h3>
+                        <ul class="text-sm text-green-700 space-y-1">
+                            <li>• Esecuzione con utente wapower</li>
+                            <li>• Permessi limitati</li>
+                            <li>• Dipendenze da fonte ufficiale</li>
+                            <li>• Cache NPM pulita</li>
+                            <li>• Directory isolate</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-yellow-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-yellow-800 mb-2">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        Note Importanti
+                    </h3>
+                    <ul class="text-sm text-yellow-700 space-y-1">
+                        <li>• Richiede Docker 20.0+ per il supporto delle funzionalità utilizzate</li>
+                        <li>• L'immagine Alpine riduce significativamente la dimensione del container</li>
+                        <li>• Chromium è necessario per il funzionamento di WhatsApp Web</li>
+                        <li>• Il health check verifica lo stato dell'API ogni 30 secondi</li>
+                    </ul>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="font-semibold text-gray-800 mb-2">
+                        <i class="fas fa-terminal mr-2 text-purple-500"></i>
+                        Comandi Build
+                    </h3>
+                    <div class="code-block"># Build dell'immagine
+docker build -t wapower-saas .
+
+# Esecuzione del container
+docker run -d \
+  --name wapower \
+  -p 3000:3000 \
+  -v ./wapower_session:/app/wapower_session \
+  -v ./wapower_database.sqlite:/app/wapower_database.sqlite \
+  -v ./logs:/app/logs \
+  wapower-saas
+
+# Usando Docker Compose (raccomandato)
+docker-compose up -d</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDshjmI917nIRIznyEWPJztPd0MuoaMgNCbDAuprLdVHRHWm%2BK4T7KkZUJJEJEmqew3RHCPwng4OvCRbfOCN4VcIz4raIgcSwmsgh7U%2FufJ6AL8a9hkWFAI4bll5QDanRZCF7uCfvPXqYlB5ZPOidiIKnv62JVxEltLigOx40rIKinoFUB74OTSD%2Bid%2FRNusFubKdZ3a%2Fvhnh71OKEtzMmiDZNIr7DMgk7otSyqir4%2F7Qs4mZPxSeg8Y0UdhBeJM8oIMj72mStJM7vkfcLuNW1v%2FK1CXotK4%2FlAKms4s16HzOwVsX25gYctUX9oHeX%2FewluAnNSSV74RVuRzTHYhTGijtBPYa1KVD9AZeJ2ZF8E1QihVUDBvo27tTJszrUoPev5TEKD1IIbLP31DAOUwrBQrlh5jx2V%2BT0srRbeFCFcLWjDS4aVpGaiNXf7xIgDfYl1bCBvfptwdgqHoCD%2F7lpNLv25c5z6NV1hAvXkRSB0J24IPsY9qruwOvCTGwuLHCWg%3D%3D";
+        window.__genspark_locale = "it-IT";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDshjmI917nIRIznyEWPJztPd0MuoaMgNCbDAuprLdVHRHWm+K4T7KkZUJJEJEmqew3RHCPwng4OvCRbfOCN4VcIz4raIgcSwmsgh7U/ufJ6AL8a9hkWFAI4bll5QDanRZCF7uCfvPXqYlB5ZPOidiIKnv62JVxEltLigOx40rIKinoFUB74OTSD+id/RNusFubKdZ3a/vhnh71OKEtzMmiDZNIr7DMgk7otSyqir4/7Qs4mZPxSeg8Y0UdhBeJM8oIMj72mStJM7vkfcLuNW1v/K1CXotK4/lAKms4s16HzOwVsX25gYctUX9oHeX/ewluAnNSSV74RVuRzTHYhTGijtBPYa1KVD9AZeJ2ZF8E1QihVUDBvo27tTJszrUoPev5TEKD1IIbLP31DAOUwrBQrlh5jx2V+T0srRbeFCFcLWjDS4aVpGaiNXf7xIgDfYl1bCBvfptwdgqHoCD/7lpNLv25c5z6NV1hAvXkRSB0J24IPsY9qruwOvCTGwuLHCWg==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

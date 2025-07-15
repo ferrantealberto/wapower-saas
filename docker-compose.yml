@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  wapower:
+    build: .
+    container_name: wapower
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=3000
+      - TZ=Europe/Rome
+    env_file:
+      - ./config/.env
+    volumes:
+      - ./wapower_session:/app/wapower_session
+      - ./wapower_database.sqlite:/app/wapower_database.sqlite
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+      - ./ssl:/app/ssl
+      - ./config:/app/config:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    networks:
+      - wapower-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: wapower-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - wapower
+    networks:
+      - wapower-network
+
+networks:
+  wapower-network:
+    driver: bridge
+
+volumes:
+  wapower_session:
+  wapower_database:
+  wapower_logs:
+  wapower_backups:

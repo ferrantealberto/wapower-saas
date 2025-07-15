@@ -1,0 +1,17 @@
+# Install dependencies
+npm install
+
+# Install production dependencies only
+npm install --production
+
+# Development mode with auto-restart
+npm run dev
+
+# Start production server
+npm start
+
+# Run setup wizard
+npm run setup
+
+# Check for updates
+npm run check-updates

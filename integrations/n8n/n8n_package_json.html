@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAPower N8N Package.json</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .code-block {
+            background-color: #1a1a1a;
+            color: #e6e6e6;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .section-header {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="section-header">
+            <h1 class="text-3xl font-bold flex items-center">
+                <i class="fas fa-cube mr-3"></i>
+                WAPower N8N Package Configuration
+            </h1>
+            <p class="text-lg mt-2">Package.json for N8N custom nodes integration</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 flex items-center">
+                <i class="fas fa-info-circle mr-2 text-blue-500"></i>
+                Package Information
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <strong>Package Name:</strong> n8n-nodes-wapower<br>
+                    <strong>Version:</strong> 1.0.0<br>
+                    <strong>Author:</strong> Alby - WAPower Team
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <strong>Keywords:</strong> n8n, wapower, whatsapp, email, gateway<br>
+                    <strong>License:</strong> MIT
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 flex items-center">
+                <i class="fas fa-file-code mr-2 text-green-500"></i>
+                Complete package.json
+            </h2>
+            
+            <div class="code-block">
+<pre>{
+  "name": "n8n-nodes-wapower",
+  "version": "1.0.0",
+  "description": "N8N nodes for WAPower - WhatsApp Gateway",
+  "keywords": ["n8n", "n8n-community-node-package", "wapower", "whatsapp", "email", "gateway"],
+  "license": "MIT",
+  "homepage": "https://wapower.it",
+  "author": {
+    "name": "Alby",
+    "email": "info@wapower.it"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wapower/n8n-nodes-wapower.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "prepublishOnly": "npm run build && npm run lint -s"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/WAPowerApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/WAPower/WAPower.node.js",
+      "dist/nodes/WAPowerTrigger/WAPowerTrigger.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.0",
+    "eslint": "^8.0.0",
+    "gulp": "^4.0.2",
+    "n8n-core": "^0.126.0",
+    "n8n-workflow": "^0.126.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}</pre>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 flex items-center">
+                <i class="fas fa-download mr-2 text-purple-500"></i>
+                Installazione
+            </h2>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h3 class="font-bold text-lg mb-2">Installazione tramite NPM:</h3>
+                <div class="code-block">
+<pre># Installa il package
+npm install n8n-nodes-wapower
+
+# Riavvia N8N
+npm run start</pre>
+                </div>
+                
+                <h3 class="font-bold text-lg mb-2 mt-4">Installazione manuale:</h3>
+                <div class="code-block">
+<pre># Clona il repository
+git clone https://github.com/wapower/n8n-nodes-wapower.git
+
+# Entra nella directory
+cd n8n-nodes-wapower
+
+# Installa dipendenze
+npm install
+
+# Builda il progetto
+npm run build
+
+# Copia nella directory N8N
+cp -r dist/* ~/.n8n/nodes/</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800 flex items-center">
+                <i class="fas fa-cogs mr-2 text-orange-500"></i>
+                Configurazione
+            </h2>
+            <div class="bg-orange-50 p-4 rounded-lg">
+                <ol class="list-decimal list-inside space-y-2">
+                    <li>Apri N8N</li>
+                    <li>Vai in "Credentials" → "Create New"</li>
+                    <li>Cerca "WAPower API"</li>
+                    <li>Inserisci:
+                        <ul class="list-disc list-inside ml-4 mt-2">
+                            <li>API URL: https://tuo-dominio.com</li>
+                            <li>API Key: la tua chiave API</li>
+                            <li>Webhook Secret: (opzionale) per verifica firma</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDuWBL%2FG9DC3R2gBqjgWF5CH%2Fs1Lx7ZV0xaIKGeFMd2ZUwVxIxx5MW3g%2BVQMk6NtXD5Aa9OPbgYeRudipAY1tVV%2BDubQqG%2FG3wVieGG0P%2B%2Fm1RZJceQA%2BK9eTuZfeYsl1BaKJRCHK5tgSzT0pz9KAitPysTXUDnILdAUEeCHUj11H3E8Gg59tp2mvFOR0Gsnk8Xc4QRlB7vV9nqvcglRK%2BIEi%2B8xZvNQ4S%2F5VoT0x5XmV4t%2FOlDAtDqnCnErNP0tMkMVDlHDGwF%2B%2F6N74NiKd11O3mRw0Q11juTBDxxB70taUFtDfBajo6UkGhp3FrtMzaAB79CZ9cip6FN1DXxdVcekNUOWrFoovPxc7kmnVy5mmmoz2GV%2BcFW%2Ba35zg8erFSYc8Coy1Qu3V%2B38TiS26gv4deButEAZo8dAHxMY2%2FIDNo0Sl4W2Hyz54O6b2Y7D5M%2B%2BOBBuo1NOSefRRf5vmnOVDGJXVY1lYXXBCE9buX%2FMWds4RNIoMyzpMuoEUpISpGg%3D%3D";
+        window.__genspark_locale = "it-IT";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDuWBL/G9DC3R2gBqjgWF5CH/s1Lx7ZV0xaIKGeFMd2ZUwVxIxx5MW3g+VQMk6NtXD5Aa9OPbgYeRudipAY1tVV+DubQqG/G3wVieGG0P+/m1RZJceQA+K9eTuZfeYsl1BaKJRCHK5tgSzT0pz9KAitPysTXUDnILdAUEeCHUj11H3E8Gg59tp2mvFOR0Gsnk8Xc4QRlB7vV9nqvcglRK+IEi+8xZvNQ4S/5VoT0x5XmV4t/OlDAtDqnCnErNP0tMkMVDlHDGwF+/6N74NiKd11O3mRw0Q11juTBDxxB70taUFtDfBajo6UkGhp3FrtMzaAB79CZ9cip6FN1DXxdVcekNUOWrFoovPxc7kmnVy5mmmoz2GV+cFW+a35zg8erFSYc8Coy1Qu3V+38TiS26gv4deButEAZo8dAHxMY2/IDNo0Sl4W2Hyz54O6b2Y7D5M++OBBuo1NOSefRRf5vmnOVDGJXVY1lYXXBCE9buX/MWds4RNIoMyzpMuoEUpISpGg==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

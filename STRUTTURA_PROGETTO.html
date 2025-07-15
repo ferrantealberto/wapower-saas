@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAPower SAAS - Struttura Completa del Progetto</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .file-tree {
+            font-family: 'Courier New', monospace;
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+        .file-item {
+            margin: 0.25rem 0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            transition: all 0.2s;
+        }
+        .file-item:hover {
+            background-color: #334155;
+        }
+        .folder {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+        .file {
+            color: #60a5fa;
+        }
+        .config-file {
+            color: #34d399;
+        }
+        .script-file {
+            color: #f87171;
+        }
+        .doc-file {
+            color: #a78bfa;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-8 mb-8">
+            <h1 class="text-4xl font-bold mb-4">
+                <i class="fas fa-project-diagram mr-3"></i>
+                WAPower SAAS - Struttura Completa del Progetto
+            </h1>
+            <p class="text-xl opacity-90">
+                Sistema professionale di inoltro email su WhatsApp con architettura enterprise
+            </p>
+            <div class="mt-4 flex flex-wrap gap-4">
+                <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">
+                    <i class="fab fa-node-js mr-1"></i> Node.js 18+
+                </span>
+                <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">
+                    <i class="fab fa-docker mr-1"></i> Docker Ready
+                </span>
+                <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">
+                    <i class="fas fa-shield-alt mr-1"></i> Enterprise Security
+                </span>
+                <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">
+                    <i class="fas fa-chart-line mr-1"></i> Production Ready
+                </span>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-file-code text-blue-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-2xl font-bold text-gray-900">26</p>
+                        <p class="text-gray-600">File Totali</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <div class="flex items-center">
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <i class="fas fa-cogs text-green-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-2xl font-bold text-gray-900">5</p>
+                        <p class="text-gray-600">Servizi Core</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <div class="flex items-center">
+                    <div class="bg-purple-100 p-3 rounded-full">
+                        <i class="fas fa-plug text-purple-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-2xl font-bold text-gray-900">2</p>
+                        <p class="text-gray-600">Integrazioni</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg p-6 shadow-lg">
+                <div class="flex items-center">
+                    <div class="bg-yellow-100 p-3 rounded-full">
+                        <i class="fas fa-book text-yellow-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-2xl font-bold text-gray-900">3</p>
+                        <p class="text-gray-600">Documentazioni</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Structure -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-sitemap mr-3 text-blue-600"></i>
+                Struttura del Progetto
+            </h2>
+            
+            <div class="file-tree">
+<pre>/WAPower-SAAS-Complete/
+├── <span class="config-file">server_js.html</span>                    <span class="text-gray-400"># 🚀 Server principale Node.js con Express</span>
+├── <span class="config-file">package_json.html</span>                <span class="text-gray-400"># 📦 Configurazione dipendenze NPM</span>
+├── <span class="config-file">Dockerfile.html</span>                  <span class="text-gray-400"># 🐳 Configurazione container Docker</span>
+├── <span class="config-file">docker-compose_yml.html</span>          <span class="text-gray-400"># 🔧 Orchestrazione multi-servizio</span>
+├── <span class="config-file">nginx_conf.html</span>                  <span class="text-gray-400"># ⚡ Reverse proxy con SSL</span>
+├── <span class="config-file">Makefile.html</span>                    <span class="text-gray-400"># 🛠️ Automazione build e deploy</span>
+├── <span class="doc-file">INSTALLAZIONE_COMPLETA.html</span>      <span class="text-gray-400"># 📋 Guida installazione step-by-step</span>
+├── <span class="doc-file">API_DOCUMENTATION.html</span>           <span class="text-gray-400"># 📚 Documentazione API completa</span>
+├── <span class="doc-file">README_COMPLETO.html</span>             <span class="text-gray-400"># 📖 Documentazione progetto</span>
+│
+├── <span class="folder">📁 config/</span>
+│   └── <span class="config-file">env_example.html</span>             <span class="text-gray-400"># ⚙️ Template variabili ambiente</span>
+│
+├── <span class="folder">📁 services/</span>                         <span class="text-gray-400"># 🏗️ Servizi core dell'applicazione</span>
+│   ├── <span class="file">database_js.html</span>               <span class="text-gray-400"># 🗄️ Gestione SQLite con backup</span>
+│   ├── <span class="file">whatsapp_js.html</span>               <span class="text-gray-400"># 📱 Client WhatsApp Web</span>
+│   ├── <span class="file">gmail_js.html</span>                  <span class="text-gray-400"># 📧 Polling Gmail API</span>
+│   ├── <span class="file">update_js.html</span>                 <span class="text-gray-400"># 🔄 Sistema aggiornamenti automatici</span>
+│   └── <span class="file">webhook_js.html</span>                <span class="text-gray-400"># 🔗 Webhook intelligenti con retry</span>
+│
+├── <span class="folder">📁 middleware/</span>
+│   └── <span class="file">auth_js.html</span>                   <span class="text-gray-400"># 🔐 Autenticazione e sicurezza</span>
+│
+├── <span class="folder">📁 utils/</span>
+│   └── <span class="file">helpers_js.html</span>                <span class="text-gray-400"># 🛠️ Funzioni utility e helper</span>
+│
+├── <span class="folder">📁 api/</span>
+│   └── <span class="file">rest_api_js.html</span>               <span class="text-gray-400"># 🌐 API REST complete</span>
+│
+├── <span class="folder">📁 public/</span>
+│   └── <span class="file">dashboard_js.html</span>              <span class="text-gray-400"># 💻 Dashboard frontend avanzata</span>
+│
+├── <span class="folder">📁 scripts/</span>
+│   ├── <span class="script-file">setup_js.html</span>                   <span class="text-gray-400"># ⚡ Setup interattivo</span>
+│   └── <span class="script-file">deploy_sh.html</span>                  <span class="text-gray-400"># 🚀 Script deploy automatico</span>
+│
+└── <span class="folder">📁 integrations/</span>                    <span class="text-gray-400"># 🔌 Integrazioni esterne</span>
+    ├── <span class="folder">📁 n8n/</span>                        <span class="text-gray-400"># 🤖 Nodi custom N8N</span>
+    │   ├── <span class="config-file">n8n_package_json.html</span>        <span class="text-gray-400"># 📦 Package N8N</span>
+    │   ├── <span class="file">n8n_credentials_js.html</span>      <span class="text-gray-400"># 🔑 Credenziali N8N</span>
+    │   ├── <span class="file">n8n_node_js.html</span>            <span class="text-gray-400"># 🎯 Nodo principale N8N</span>
+    │   └── <span class="file">n8n_trigger_js.html</span>         <span class="text-gray-400"># ⚡ Trigger webhook N8N</span>
+    │
+    └── <span class="folder">📁 wordpress/</span>                   <span class="text-gray-400"># 🌐 Plugin WordPress</span>
+        └── <span class="file">wordpress_plugin_php.html</span>    <span class="text-gray-400"># 🔌 Plugin completo WordPress</span>
+</pre>
+            </div>
+        </div>
+
+        <!-- Core Components -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Server Core -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-bold mb-4 flex items-center">
+                    <i class="fas fa-server mr-3 text-blue-600"></i>
+                    Core del Server
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex items-center p-3 bg-blue-50 rounded-lg">
+                        <i class="fas fa-code text-blue-600 mr-3"></i>
+                        <div>
+                            <p class="font-semibold">server_js.html</p>
+                            <p class="text-sm text-gray-600">Server Express con Socket.IO, routing, middleware</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                        <i class="fas fa-database text-green-600 mr-3"></i>
+                        <div>
+                            <p class="font-semibold">database_js.html</p>
+                            <p class="text-sm text-gray-600">SQLite con backup automatico e ottimizzazioni</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 bg-purple-50 rounded-lg">
+                        <i class="fas fa-shield-alt text-purple-600 mr-3"></i>
+                        <div>
+                            <p class="font-semibold">auth_js.html</p>
+                            <p class="text-sm text-gray-600">Autenticazione bcrypt, rate limiting, sessioni</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-bold mb-4 flex items-center">
+                    <i class="fas fa-cogs mr-3 text-green-600"></i>
+                    Servizi Principali
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                        <i class="fab fa-whatsapp text-green-600 mr-3"></i>
+                        <div>
+                            <p class="font-semibold">whatsapp_js.html</p>
+                            <p class="text-sm text-gray-600">Client WhatsApp Web, coda messaggi, media</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 bg-red-50 rounded-lg">
+                        <i class="fas fa-envelope text-red-600 mr-3"></i>
+                        <div>
+                            <p class="font-semibold">gmail_js.html</p>
+                            <p class="text-sm text-gray-600">Polling Gmail, estrazione numeri, allegati</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 bg-yellow-50 rounded-lg">
+                        <i class="fas fa-sync-alt text-yellow-600 mr-3"></i>
+                        <div>
+                            <p class="font-semibold">update_js.html</p>
+                            <p class="text-sm text-gray-600">Aggiornamenti automatici con backup</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Docker & Deployment -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fab fa-docker mr-3 text-blue-600"></i>
+                Docker & Deployment
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 bg-blue-50 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        <i class="fab fa-docker text-blue-600 mr-2"></i>
+                        <span class="font-semibold">Dockerfile.html</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Container Node.js ottimizzato con Puppeteer per WhatsApp</p>
+                </div>
+                <div class="p-4 bg-green-50 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-layer-group text-green-600 mr-2"></i>
+                        <span class="font-semibold">docker-compose_yml.html</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Orchestrazione con Nginx, volumi e networking</p>
+                </div>
+                <div class="p-4 bg-purple-50 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-rocket text-purple-600 mr-2"></i>
+                        <span class="font-semibold">deploy_sh.html</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Script deploy automatico con SSL e health check</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integrations -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-plug mr-3 text-purple-600"></i>
+                Integrazioni Native
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- N8N Integration -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-bold mb-3 flex items-center">
+                        <i class="fas fa-robot text-blue-600 mr-2"></i>
+                        N8N Custom Nodes
+                    </h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center">
+                            <i class="fas fa-file-code text-gray-400 mr-2"></i>
+                            <span>n8n_package_json.html - Configurazione package</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-key text-gray-400 mr-2"></i>
+                            <span>n8n_credentials_js.html - Autenticazione API</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-code text-gray-400 mr-2"></i>
+                            <span>n8n_node_js.html - Nodo principale</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-bolt text-gray-400 mr-2"></i>
+                            <span>n8n_trigger_js.html - Trigger webhook</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WordPress Integration -->
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h4 class="font-bold mb-3 flex items-center">
+                        <i class="fab fa-wordpress text-blue-600 mr-2"></i>
+                        WordPress Plugin
+                    </h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center">
+                            <i class="fas fa-file-code text-gray-400 mr-2"></i>
+                            <span>wordpress_plugin_php.html - Plugin completo</span>
+                        </div>
+                        <div class="space-y-1 ml-6 text-xs text-gray-600">
+                            <p>• Shortcodes per form e pulsanti</p>
+                            <p>• Integrazione WooCommerce</p>
+                            <p>• Widget per sidebar</p>
+                            <p>• REST API e webhook</p>
+                            <p>• Compatibilità Elementor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-book mr-3 text-yellow-600"></i>
+                Documentazione
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 bg-yellow-50 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-wrench text-yellow-600 mr-2"></i>
+                        <span class="font-semibold">INSTALLAZIONE_COMPLETA.html</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Guida step-by-step con prerequisiti, configurazione Gmail API, SSL</p>
+                </div>
+                <div class="p-4 bg-blue-50 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-code text-blue-600 mr-2"></i>
+                        <span class="font-semibold">API_DOCUMENTATION.html</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Documentazione completa API REST con esempi e autenticazione</p>
+                </div>
+                <div class="p-4 bg-green-50 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-book-open text-green-600 mr-2"></i>
+                        <span class="font-semibold">README_COMPLETO.html</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Overview progetto, features, troubleshooting e FAQ</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Start -->
+        <div class="bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg p-6 mb-8">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-rocket mr-3"></i>
+                Quick Start
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                    <div class="font-semibold mb-2">1. Setup Automatico</div>
+                    <code class="text-xs block">npm run setup</code>
+                    <p class="mt-1 text-xs">Configurazione interattiva guidata</p>
+                </div>
+                <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                    <div class="font-semibold mb-2">2. Deploy Docker</div>
+                    <code class="text-xs block">make deploy</code>
+                    <p class="mt-1 text-xs">Build e avvio con Docker Compose</p>
+                </div>
+                <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                    <div class="font-semibold mb-2">3. Configurazione SSL</div>
+                    <code class="text-xs block">make ssl</code>
+                    <p class="mt-1 text-xs">Certificati automatici Let's Encrypt</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-star mr-3 text-yellow-600"></i>
+                Caratteristiche Principali
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="flex items-start p-3 bg-blue-50 rounded-lg">
+                    <i class="fas fa-shield-alt text-blue-600 mr-3 mt-1"></i>
+                    <div>
+                        <p class="font-semibold">Sicurezza Enterprise</p>
+                        <p class="text-sm text-gray-600">Bcrypt, rate limiting, HMAC, SSL</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-3 bg-green-50 rounded-lg">
+                    <i class="fas fa-sync-alt text-green-600 mr-3 mt-1"></i>
+                    <div>
+                        <p class="font-semibold">Aggiornamenti Automatici</p>
+                        <p class="text-sm text-gray-600">NPM, app, sistema con backup</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-3 bg-purple-50 rounded-lg">
+                    <i class="fas fa-chart-line text-purple-600 mr-3 mt-1"></i>
+                    <div>
+                        <p class="font-semibold">Dashboard Real-time</p>
+                        <p class="text-sm text-gray-600">Socket.IO, PWA, notifiche</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-3 bg-yellow-50 rounded-lg">
+                    <i class="fas fa-database text-yellow-600 mr-3 mt-1"></i>
+                    <div>
+                        <p class="font-semibold">Backup Intelligente</p>
+                        <p class="text-sm text-gray-600">SQLite, file, configurazioni</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-3 bg-red-50 rounded-lg">
+                    <i class="fas fa-code text-red-600 mr-3 mt-1"></i>
+                    <div>
+                        <p class="font-semibold">API Complete</p>
+                        <p class="text-sm text-gray-600">REST, webhook, rate limiting</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-3 bg-indigo-50 rounded-lg">
+                    <i class="fas fa-plug text-indigo-600 mr-3 mt-1"></i>
+                    <div>
+                        <p class="font-semibold">Integrazioni Native</p>
+                        <p class="text-sm text-gray-600">N8N, WordPress, Zapier</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-gray-600">
+            <p class="mb-2">
+                <i class="fas fa-code mr-2"></i>
+                Developed by <strong>Alby</strong> - Senior Full Stack Developer
+            </p>
+            <p class="text-sm">
+                WAPower SAAS v1.0.0 - Sistema Enterprise per Inoltro Email su WhatsApp
+            </p>
+            <div class="mt-4 flex justify-center space-x-6 text-sm">
+                <a href="#" class="text-blue-600 hover:text-blue-800">
+                    <i class="fab fa-github mr-1"></i> GitHub
+                </a>
+                <a href="#" class="text-blue-600 hover:text-blue-800">
+                    <i class="fas fa-book mr-1"></i> Documentazione
+                </a>
+                <a href="#" class="text-blue-600 hover:text-blue-800">
+                    <i class="fas fa-question-circle mr-1"></i> Supporto
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDlQD%2FLrimMN7wfzoUTXrCsFBHv1Fi0XU%2Bc12LJqeQmVLooL7jl5H2ez87%2BtVtvhd5kVioa4SiGgBH9%2F4LUNlwTdYqLpF5e6QiCfC%2FAsR4Oi%2BDa2eeQs77nIi%2ByF78FMP0VCXfdPPkPGVOGoI15t%2F79mvUeS8nIwc2C40IJa8vTGuCaMUtkn%2BbDofLCGRLFcrDnJ0yNVFvOXdzD%2FUKC6%2FhH%2FtA%2FYQvay1wfwtIK2RujfW89JuReeEWbmNqGVJep8ijPMexTyM2HCT5wg9Sbpc7M1q9JkZY5BhQ4OdIXYMdUmTKM00LhLkIWLsQcSeiNN5QGnWzYOxXIU%2FF6GNj%2FMu0du2Yt3PHe6G6gBjWhscQOczWiU2HMCrzDFR%2FiuUNlkJTNVVmRX9WFz8zpDNU5LLXxZ91jgW9Ue3xJpW3lFAvuVrMot%2FYysKThDJtGJ3lDoloKPsnbG7m%2B3d1sdR0yznXW3oyoA4aGjWeRNNY1ulV%2B7lwzJEbC1GNAOG45FTsy6chQ%3D%3D";
+        window.__genspark_locale = "it-IT";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDlQD/LrimMN7wfzoUTXrCsFBHv1Fi0XU+c12LJqeQmVLooL7jl5H2ez87+tVtvhd5kVioa4SiGgBH9/4LUNlwTdYqLpF5e6QiCfC/AsR4Oi+Da2eeQs77nIi+yF78FMP0VCXfdPPkPGVOGoI15t/79mvUeS8nIwc2C40IJa8vTGuCaMUtkn+bDofLCGRLFcrDnJ0yNVFvOXdzD/UKC6/hH/tA/YQvay1wfwtIK2RujfW89JuReeEWbmNqGVJep8ijPMexTyM2HCT5wg9Sbpc7M1q9JkZY5BhQ4OdIXYMdUmTKM00LhLkIWLsQcSeiNN5QGnWzYOxXIU/F6GNj/Mu0du2Yt3PHe6G6gBjWhscQOczWiU2HMCrzDFR/iuUNlkJTNVVmRX9WFz8zpDNU5LLXxZ91jgW9Ue3xJpW3lFAvuVrMot/YysKThDJtGJ3lDoloKPsnbG7m+3d1sdR0yznXW3oyoA4aGjWeRNNY1ulV+7lwzJEbC1GNAOG45FTsy6chQ==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
